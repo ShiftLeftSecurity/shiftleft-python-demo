@@ -1,0 +1,41 @@
+variables:
+- group: shiftleft-token
+
+trigger:
+- master
+- feature/*
+
+pool:
+  vmImage: 'windows-latest'
+
+steps:
+- task: PowerShell@2
+  displayName: Download ShiftLeft cli
+  inputs:
+    targetType: 'inline'
+    script: |
+      Invoke-WebRequest -Uri 'https://cdn.shiftleft.io/download/sl-latest-windows-x64.zip' -OutFile $(Agent.HomeDirectory)\sl.zip
+      Expand-Archive -Path $(Agent.HomeDirectory)\sl.zip -DestinationPath $(Agent.HomeDirectory)\
+- task: PowerShell@2
+  displayName: Enable linux containers
+  inputs:
+    targetType: 'inline'
+    script: |
+      Invoke-WebRequest -Uri https://github.com/linuxkit/lcow/releases/download/v4.14.35-v0.3.9/release.zip -OutFile release.zip
+      Expand-Archive release.zip -DestinationPath "$Env:ProgramFiles\Linux Containers\."
+      '{"experimental":true}' | Out-File "$Env:ProgramData\docker\config\daemon.json " -encoding ASCII
+      Restart-Service docker
+- task: CmdLine@2
+  displayName: Analyze with Inspect
+  inputs:
+    script: |
+      docker pull --platform linux docker.io/shiftleft/scan-slim
+      docker run --platform linux docker.io/shiftleft/scan-slim scan --help
+      $(Agent.HomeDirectory)\sl analyze --verbose --no-diagnostic --force --version-id 1 --app ShiftLeftPythonAzWin branch=$(Build.SourceBranchName) --python $(Build.SourcesDirectory)
+    workingDirectory: '$(Build.SourcesDirectory)'
+  env:
+    SHIFTLEFT_ORG_ID: $(SHIFTLEFT_ORG_ID)
+    SHIFTLEFT_ACCESS_TOKEN: $(SHIFTLEFT_ACCESS_TOKEN)
+    SHIFTLEFT_API_TOKEN: $(SHIFTLEFT_API_TOKEN)
+    LCOW_SUPPORTED: 1
+    LCOW_API_PLATFORM_IF_OMITTED: linux
