@@ -17,4 +17,4 @@ RUN python3 -m venv .venv \
     && pip install -r requirements.txt
 
 # Perform sl analysis
-RUN ./sl analyze --app flask-webgoat-docker --tag branch=$BRANCH --python --cpg --beta .
+RUN ./sl analyze --app flask-webgoat-docker --tag branch=$BRANCH --python --cpg .
