@@ -1,2 +1,0 @@
-def cobia():
-    print ("A")
