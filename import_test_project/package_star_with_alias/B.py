@@ -1,2 +1,0 @@
-def al():
-    print ("B")
