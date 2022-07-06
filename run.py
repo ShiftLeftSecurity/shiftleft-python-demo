@@ -2,6 +2,8 @@ from flask_webgoat import create_app
 
 app = create_app()
 
+x = 1
+
 @app.after_request
 def add_csp_headers(response):
     # vulnerability: Broken Access Control
