@@ -55,3 +55,9 @@ $ grep vulnerability . -R -n | grep -v README
 ./run.py:7:    # vulnerability: Broken Access Control
 ./run.py:9:    # vulnerability: Security Misconfiguration
 ```
+### Execute the following command to run Check Analysis V2 
+see documentation: https://docs.shiftleft.io/ngsast/build-rules-v2
+Example: 
+```bash
+sl check-analysis --v2 --source scan.1  --target scan.9 --app APPLICATION_NAME --config ./shiftleft.yml
+```

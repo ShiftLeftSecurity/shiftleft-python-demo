@@ -1,0 +1,83 @@
+# Documentation on using check analysis https://docs.shiftleft.io/cli/reference/check-analysis-v2
+source:
+  branch: master
+build_rules:
+  - id: allow-high-settings
+    finding_types:
+      - container
+    cvss_31_severity_ratings:
+      - high
+    threshold: 3
+    options:
+      num_findings: 3 # Return 3 findings
+  - id: build-rule-identifier
+    # The specific type of finding to which the build rule should be applied. Accepted values: vuln, secret, insight, oss_vuln, container. If you omit this parameter, ShiftLeft defaults to returning only vulnerabilities.
+    finding_types:
+      - vuln
+      - secret
+      - insight
+      - oss_vuln
+      - container
+    # Setting severity level (Critical, High, Medium, Low)
+    cvss_31_severity_ratings:
+      - high
+      - critical
+# Do you want to focus on just one or more types?
+#    type:
+#      - Weak Random
+#      - Sensitive Data Leak
+#      - Deserialization
+#      - Directory Traversal
+#      - Sensitive Data Exposure
+#      - Remote Code Execution
+#      - Command Injection
+#      - Security Best Practices
+#      - Unsafe Reflection
+#      - Regex Injection
+#      - SQL Injection
+#      - XML External Entities
+#      - Template Injection
+#      - Cross-Site Scripting
+#      - JSON Injection
+#      - Potential SQL Injection
+#      - Potential Regex Injection
+#      - Header Injection
+#      - Security Misconfiguration
+#      - Deprecated Function Use
+#      - Mail Injection
+#      - Race Condition
+#      - Sensitive Data Usage
+#      - Open Redirect
+#      - Error Handling
+#      - HTTP to Database
+#      - HTTP to Model
+#      - LDAP Injection
+#      - Denial of Service
+#      - CRLF Injection
+#      - NoSQL Injection
+#      - Weak Hash
+#      - Session Injection
+#      - Server-Side Request Forgery
+#      - Prototype Pollution
+#      - Log Forging
+#      - XPath Injection
+#      - Insecure Authentication
+#      - Intent Redirection
+#      - Authentication Bypass
+#      - Weak Cipher
+#      - Crypto
+# Focus by OWASP Category?
+#   owasp_2021_categories:
+#      - a01-broken-access-control
+#      - a02-cryptographic-failures
+#      - a03-injection
+#      - a04-insecure-design
+#      - a05-security-misconfiguration
+#      - a06-vulnerable-and-outdated-components
+#      - a07-identification-and-authentication-failures
+#      - a08-software-and-data-integrity-failures
+#      - a09-security-logging-and-monitoring-failures
+#      - a10-server-side-request-forgery-(ssrf)
+    threshold: 0
+    options:
+      num_findings: 10 # Return 10 findings
