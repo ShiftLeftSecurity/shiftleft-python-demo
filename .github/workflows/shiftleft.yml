@@ -21,7 +21,7 @@ jobs:
       id: extract_branch
     - name: NextGen Static Analysis
       run: |
-        pip install --upgrade setuptools wheel
+        #pip install --upgrade setuptools wheel
         pip install -r requirements.txt
         ${GITHUB_WORKSPACE}/sl analyze --strict --wait --app shiftleft-python-demo --container 18fgsa/s3-resource --tag branch=${{ github.head_ref || steps.extract_branch.outputs.branch }} --python $(pwd)
       env:
