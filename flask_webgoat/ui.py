@@ -11,7 +11,6 @@ def search():
     query_param = request.args.get("query")
     if query_param is None:
         message = "please provide the query parameter"
-        # vulnerability: XSS
         return render_template("error.html", message=message)
 
     try:
