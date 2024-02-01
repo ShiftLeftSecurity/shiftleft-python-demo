@@ -1,4 +1,5 @@
 from flask_webgoat import create_app
+import numpy
 
 app = create_app()
 
